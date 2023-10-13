@@ -19,7 +19,7 @@ public class Task7 {
         int countBits = countBits(n);
         int tempShift = shift % countBits;
 
-        return (n >> tempShift) | (~(Integer.MAX_VALUE << tempShift) << (countBits - tempShift));
+        return (n >> tempShift) | ((~(Integer.MAX_VALUE << tempShift) & n) << (countBits - tempShift));
     }
 
     private static int countBits(int n) {
@@ -33,7 +33,9 @@ public class Task7 {
     }
 
     private static void checkArgs(int n, int shift) {
-        if (isNegative(n)) {
+        if (isNegative(n) && isNegative(shift)) {
+            throw new IllegalArgumentException("First and second arguments must be more than 0");
+        } else if (isNegative(n)) {
             throw new IllegalArgumentException("First argument must be more than 0");
         } else if (isNegative(shift)) {
             throw new IllegalArgumentException("Second argument must be more than 0");
@@ -41,6 +43,6 @@ public class Task7 {
     }
 
     private static boolean isNegative(int n) {
-        return n < 0;
+        return n <= 0;
     }
 }

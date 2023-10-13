@@ -1,17 +1,21 @@
 package edu.hw1;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 public class Task6Test {
 
-    @Test
-    public void countKNumber3524ResultCount3() {
-        // Given
-        int inputNumber = 3524;
-        int expectedCountK = 3;
-
+    @ParameterizedTest
+    @CsvSource(value = {
+        "3524, 3",
+        // Для 1000 постоянную Капрекара тоже можно вычислить: 1000 => 1000 - 0001 = 0999 => 9990 - 0999 => ...
+        "1000, 5",
+        "9998, 5",
+        "6174, 0"
+    })
+    public void countK_InputNumber_ResultCountK(int inputNumber, int expectedCountK) {
         // When
         int actualCountK = Task6.countK(inputNumber);
 
@@ -19,84 +23,17 @@ public class Task6Test {
         assertThat(actualCountK).isEqualTo(expectedCountK);
     }
 
-    // Для 1000 постоянную Капрекара тоже можно вычислить
-    // 1000 => 1000 - 0001 = 999 => 9990 - 0999 => ...
-    @Test
-    public void countKNumber1000ResultCount5() {
-        // Given
-        int inputNumber = 1000;
-        int expectedCountK = 5;
-
-        // When
-        int actualCountK = Task6.countK(inputNumber);
-
-        // Then
-        assertThat(actualCountK).isEqualTo(expectedCountK);
-    }
-
-    @Test
-    public void countKNumber9998ResultCount5() {
-        // Given
-        int inputNumber = 9998;
-        int expectedCountK = 5;
-
-        // When
-        int actualCountK = Task6.countK(inputNumber);
-
-        // Then
-        assertThat(actualCountK).isEqualTo(expectedCountK);
-    }
-
-    @Test
-    public void countKNumber6174ResultCount0() {
-        // Given
-        int inputNumber = 6174;
-        int expectedCountK = 0;
-
-        // When
-        int actualCountK = Task6.countK(inputNumber);
-
-        // Then
-        assertThat(actualCountK).isEqualTo(expectedCountK);
-    }
-
-    @Test
-    public void countKNumberGreaterThan9999ThrowIllegalArgumentException() {
-        int inputNumber = 9999999;
-
+    @ParameterizedTest
+    @CsvSource(value = {
+        "9999999,   Number must be greater than 999 and less than 9999",
+        "0,         Number must be greater than 999 and less than 9999",
+        "-4321,     Number must be greater than 999 and less than 9999",
+        "4444,      Four identical digits are not allowed"
+    })
+    public void countK_InputNumber_ResultThrowIllegalArgumentException(int inputNumber, String expectedMessage) {
         assertThatThrownBy(() -> {
             Task6.countK(inputNumber);
         }).isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("Number must be greater than 999 and less than 9999");
-    }
-
-    @Test
-    public void countKNumberLessThan1000ThrowIllegalArgumentException() {
-        int inputNumber = 0;
-
-        assertThatThrownBy(() -> {
-            Task6.countK(inputNumber);
-        }).isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("Number must be greater than 999 and less than 9999");
-    }
-
-    @Test
-    public void countKNegativeNumberThrowIllegalArgumentException() {
-        int inputNumber = -4321;
-
-        assertThatThrownBy(() -> {
-            Task6.countK(inputNumber);
-        }).isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("Number must be greater than 999 and less than 9999");
-    }
-
-    @Test
-    public void countKNumberContainsFourIdenticalDigitsThrowIllegalArgumentException() {
-        int inputNumber = 4444;
-
-        assertThatThrownBy(() -> {
-            Task6.countK(inputNumber);
-        }).isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("Four identical digits are not allowed");
+            .hasMessage(expectedMessage);
     }
 }

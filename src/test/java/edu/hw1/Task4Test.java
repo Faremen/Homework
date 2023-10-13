@@ -1,17 +1,20 @@
 package edu.hw1;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 public class Task4Test {
 
-    @Test
-    public void fixStringEvenLengthInputString() {
-        // Given
-        String inputStr = "hTsii  s aimex dpus rtni.g";
-        String expectedStr = "This is a mixed up string.";
-
+    @ParameterizedTest
+    @CsvSource(value = {
+        "hTsii  s aimex dpus rtni.g, This is a mixed up string.",
+        "123456, 214365",
+        "badce, abcde"
+    })
+    public void fixString_InputString_ResultStringWhichPairsCharactersSwapped(String inputStr, String expectedStr) {
         // When
         String actualSrt = Task4.fixString(inputStr);
 
@@ -20,19 +23,7 @@ public class Task4Test {
     }
 
     @Test
-    public void fixStringOddLengthString() {
-        // Given
-        String inputStr = "12345";
-        String expectedExceptionMessage = "Length string must be even";
-
-        assertThatThrownBy(() -> {
-            Task4.fixString(inputStr);
-        }).isInstanceOf(IllegalArgumentException.class)
-            .hasMessage(expectedExceptionMessage);
-    }
-
-    @Test
-    public void fixStringEmptyString() {
+    public void fixString_InputEmptyString_ResultThrowIllegalArgumentException() {
         // Given
         String inputStr = "";
         String expectedExceptionMessage = "Empty string";
@@ -44,14 +35,12 @@ public class Task4Test {
     }
 
     @Test
-    public void fixStringLengthStringEqualsOne() {
+    public void fixString_InputNullString_ResultNullPointerException() {
         // Given
-        String inputStr = "9";
-        String expectedExceptionMessage= "Length string must be even";
+        String inputStr = null;
 
         assertThatThrownBy(() -> {
             Task4.fixString(inputStr);
-        }).isInstanceOf(IllegalArgumentException.class)
-            .hasMessage(expectedExceptionMessage);
+        }).isInstanceOf(NullPointerException.class);
     }
 }

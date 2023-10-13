@@ -1,79 +1,28 @@
 package edu.hw1;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Task5Test {
 
-    @Test
-    public void isPalindromeDescendantPalindromeEvenLength() {
-        // Given
-        int inputNumber = 11;
-
+    @ParameterizedTest
+    @CsvSource(value = {
+        "11,        true",
+        "11211230,  true",
+        "363,       true",
+        "36324,     false",
+        "8,         false",
+        "-121,      true"
+    })
+    public void isPalindromeDescendant_InputNumber_ResultIsNumberPalindromesDescendant(
+        int inputNumber,
+        boolean expectedIsPalindromeDescendant
+    ) {
         // When
         boolean actualIsPalindromeDescendant = Task5.isPalindromeDescendant(inputNumber);
 
         // Then
-        assertThat(actualIsPalindromeDescendant).isTrue();
-    }
-
-    @Test
-    public void isPalindromeDescendantNotPalindromeEvenLength() {
-        // Given
-        int inputNumber = 11211230;
-
-        // When
-        boolean actualIsPalindromeDescendant = Task5.isPalindromeDescendant(inputNumber);
-
-        // Then
-        assertThat(actualIsPalindromeDescendant).isTrue();
-    }
-
-    @Test
-    public void isPalindromeDescendantPalindromeOddLength() {
-        // Given
-        int inputNumber = 363;
-
-        // When
-        boolean actualIsPalindromeDescendant = Task5.isPalindromeDescendant(inputNumber);
-
-        // Then
-        assertThat(actualIsPalindromeDescendant).isTrue();
-    }
-
-    @Test
-    public void isPalindromeDescendantNotPalindromeOddLength() {
-        // Given
-        int inputNumber = 36324;
-
-        // When
-        boolean actualIsPalindromeDescendant = Task5.isPalindromeDescendant(inputNumber);
-
-        // Then
-        assertThat(actualIsPalindromeDescendant).isFalse();
-    }
-
-    @Test
-    public void isPalindromeDescendantValueLengthEqualsOne() {
-        // Given
-        int inputNumber = 8;
-
-        // When
-        boolean actualIsPalindromeDescendant = Task5.isPalindromeDescendant(inputNumber);
-
-        // Then
-        assertThat(actualIsPalindromeDescendant).isFalse();
-    }
-
-    @Test
-    public void isPalindromeDescendantNegativePalindrome() {
-        // Given
-        int inputNumber = -121;
-
-        // When
-        boolean actualIsPalindromeDescendant = Task5.isPalindromeDescendant(inputNumber);
-
-        // Then
-        assertThat(actualIsPalindromeDescendant).isTrue();
+        assertThat(actualIsPalindromeDescendant).isEqualTo(expectedIsPalindromeDescendant);
     }
 }
