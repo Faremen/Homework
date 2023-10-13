@@ -20,6 +20,7 @@ public class Task6Test {
     }
 
     // Для 1000 постоянную Капрекара тоже можно вычислить
+    // 1000 => 1000 - 0001 = 999 => 9990 - 0999 => ...
     @Test
     public void countKNumber1000ResultCount5() {
         // Given
@@ -38,6 +39,19 @@ public class Task6Test {
         // Given
         int inputNumber = 9998;
         int expectedCountK = 5;
+
+        // When
+        int actualCountK = Task6.countK(inputNumber);
+
+        // Then
+        assertThat(actualCountK).isEqualTo(expectedCountK);
+    }
+
+    @Test
+    public void countKNumber6174ResultCount0() {
+        // Given
+        int inputNumber = 6174;
+        int expectedCountK = 0;
 
         // When
         int actualCountK = Task6.countK(inputNumber);

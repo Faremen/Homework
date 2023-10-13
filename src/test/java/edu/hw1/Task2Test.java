@@ -6,7 +6,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 public class Task2Test {
 
     @Test
-    public void countDigitsZero() {
+    public void countDigits_InputNumberZero_ResultOne() {
         // Given
         int inputNumber = 0;
         int expectedCount = 1;
@@ -19,7 +19,7 @@ public class Task2Test {
     }
 
     @Test
-    public void countDigitsOneDigitNumber() {
+    public void countDigits_InputOneDigitNumber_ResultOne() {
         // Given
         int inputNumber = 5;
         int expectedCount = 1;
@@ -32,7 +32,7 @@ public class Task2Test {
     }
 
     @Test
-    public void countDigitsFourDigitNumber() {
+    public void countDigits_InputFourDigitNumber_ResultFour() {
         // Given
         int inputNumber = 5555;
         int expectedCount = 4;
@@ -46,7 +46,7 @@ public class Task2Test {
     }
 
     @Test
-    public void countDigitsNegativeFourDigitNumber() {
+    public void countDigits_NegativeFourDigitNumber_ResultFour() {
         // Given
         int inputNumber = -5555;
         int expectedCount = 4;

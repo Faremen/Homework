@@ -8,6 +8,10 @@ public class Task1 {
     private Task1() {}
 
     public static int minutesToSeconds(String str) {
+        if (str == null) {
+            return -1;
+        }
+
         String[] strings = str.split(SEPARATOR);
 
         try {
