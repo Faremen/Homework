@@ -1,10 +1,15 @@
 package edu.hw1;
 
+import java.util.Objects;
+
 public class Task3 {
 
     private Task3() {}
 
     public static boolean isNestable(int[] firstArray, int[] secondArray) {
+        Objects.requireNonNull(firstArray);
+        Objects.requireNonNull(secondArray);
+
         int minInFirstArray = findMin(firstArray);
         int minInSecondArray = findMin(secondArray);
         int maxInFirstArray = findMax(firstArray);

@@ -1,7 +1,6 @@
 package edu.hw1;
 
 public class Task1 {
-    private final static int MAX_SECOND_BEFORE_BECOMING_MINUTE = 59;
     private final static int SECONDS_IN_MINUTE = 60;
     private final static String SEPARATOR = ":";
 
@@ -19,7 +18,7 @@ public class Task1 {
                 int minutes = Integer.parseUnsignedInt(strings[0]);
                 int seconds = Integer.parseUnsignedInt(strings[1]);
 
-                if (seconds <= MAX_SECOND_BEFORE_BECOMING_MINUTE && seconds >= 0) {
+                if (seconds < SECONDS_IN_MINUTE && seconds >= 0) {
                     return minutes * SECONDS_IN_MINUTE + seconds;
                 }
             }
