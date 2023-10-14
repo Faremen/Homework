@@ -67,7 +67,10 @@ public class Task7Test {
         return Stream.of(
             Arguments.of(0, 0, "First and second arguments must be more than 0"),
             Arguments.of(0, 2, "First argument must be more than 0"),
-            Arguments.of(27, 0, "Second argument must be more than 0")
+            Arguments.of(27, 0, "Second argument must be more than 0"),
+            Arguments.of(-10, -2, "First and second arguments must be more than 0"),
+            Arguments.of(10, -2, "Second argument must be more than 0"),
+            Arguments.of(-10, 2, "First argument must be more than 0")
         );
     }
 
