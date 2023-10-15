@@ -42,7 +42,7 @@ public class Task7Test {
             Arguments.of(16, 1, 8),                                 // 10000 (16) -> 01000 (8)
             Arguments.of(17, 2, 12),                                // 10001 (17) -> 01100 (12)
             Arguments.of(27, 2, 30),                                // 11011 (27) -> 11110 (30)
-            Arguments.of(27, 10, 27),                                // 11011 (27) -> 11011 (27)
+            Arguments.of(27, 10, 27),                               // 11011 (27) -> 11011 (27)
             Arguments.of(Integer.MAX_VALUE, 10, Integer.MAX_VALUE), // 1111...1111 -> 1111...1111
             Arguments.of(1, Integer.MAX_VALUE, 1),
             Arguments.of(63, 20, 63)                                // 111111 (63) -> 111111 (63)
