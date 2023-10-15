@@ -8,7 +8,9 @@ public class Session {
     }
 
     public void decAttempts() {
-        attempts--;
+        if (attempts > 0) {
+            attempts--;
+        }
     }
 
     public boolean isAttemptsLeft() {

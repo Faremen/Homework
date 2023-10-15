@@ -13,64 +13,9 @@ class HiddenWordTest {
     private HiddenWord hiddenWord;
 
     @BeforeEach
-    public void beforeAll() {
+    public void setUp() {
         hiddenWord = new HiddenWord("Слово", '*');
     }
-
-    @Test
-    public void guessSymbol_InputOneHiddenSymbol_ResultSymbolAddedAndContainedInWord() {
-        // Given
-        char inputChar = 'С';
-        GuessResult expectedResult = new GuessResult(true, true);
-
-        // When
-        GuessResult actualResult = hiddenWord.guessSymbol(inputChar);
-
-        // Then
-        assertThat(actualResult).isEqualTo(expectedResult);
-    }
-
-    @Test
-    public void guessSymbol_InputOneNotHiddenSymbol_ResultSymbolAddedAndNotContainedInWord() {
-        // Given
-        char inputChar = '1';
-        GuessResult expectedResult = new GuessResult(true, false);
-
-        // When
-        GuessResult actualResult = hiddenWord.guessSymbol(inputChar);
-
-        // Then
-        assertThat(actualResult).isEqualTo(expectedResult);
-    }
-
-    @Test
-    public void guessSymbol_InputHiddenSymbolTwice_ResultSymbolNotAddedAndContainedInWord() {
-        // Given
-        char inputChar = 'С';
-        GuessResult expectedResult = new GuessResult(false, true);
-
-        // When
-        hiddenWord.guessSymbol(inputChar);
-        GuessResult actualResult = hiddenWord.guessSymbol(inputChar);
-
-        // Then
-        assertThat(actualResult).isEqualTo(expectedResult);
-    }
-
-    @Test
-    public void guessSymbol_InputNotHiddenSymbolTwice_ResultSymbolNotAddedAndNotContainedInWord() {
-        // Given
-        char inputChar = '1';
-        GuessResult expectedResult = new GuessResult(false, false);
-
-        // When
-        hiddenWord.guessSymbol(inputChar);
-        GuessResult actualResult = hiddenWord.guessSymbol(inputChar);
-
-        // Then
-        assertThat(actualResult).isEqualTo(expectedResult);
-    }
-
 
     @Test
     public void getMaskedWord_NotInputSymbols_ResultCompletelyMaskedWord() {
@@ -83,22 +28,6 @@ class HiddenWordTest {
         // Then
         assertThat(actualResult).isEqualTo(expectedResult);
     }
-
-    @ParameterizedTest
-    @CsvSource(value = {
-        "1, *****",
-        "С, С****",
-        "о, **о*о"
-    })
-    public void getMaskedWord_InputSymbol_ResultMaskedWord(char inputSymbol, String expectedResult) {
-        // When
-        hiddenWord.guessSymbol(inputSymbol);
-        String actualResult = hiddenWord.getMaskedWord();
-
-        // Then
-        assertThat(actualResult).isEqualTo(expectedResult);
-    }
-
 
     private static Stream<Arguments> guessSymbol_ProvideParameters() {
         return Stream.of(
@@ -136,6 +65,25 @@ class HiddenWordTest {
         // When
         inputSymbols.chars().forEach((c) -> hiddenWord.guessSymbol((char) c));
         String actualResult = hiddenWord.getMaskedWord();
+
+        // Then
+        assertThat(actualResult).isEqualTo(expectedResult);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {
+        "1,             false",
+        "С,             false",
+        "о,             false",
+        "Св,            false",
+        "Сол,           false",
+        "олСв,          true",
+        "Слововывывы,   true"
+    })
+    public void isWordGuessed_InputSymbols_ResultIsWordGuessed(String inputSymbols, boolean expectedResult) {
+        // When
+        inputSymbols.chars().forEach((c) -> hiddenWord.guessSymbol((char) c));
+        boolean actualResult = hiddenWord.isWordGuessed();
 
         // Then
         assertThat(actualResult).isEqualTo(expectedResult);
