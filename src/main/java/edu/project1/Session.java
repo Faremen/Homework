@@ -14,6 +14,7 @@ public class Session {
     public boolean isAttemptsLeft() {
         return attempts <= 0;
     }
+
     public int getAttempts() {
         return attempts;
     }
