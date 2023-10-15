@@ -27,7 +27,7 @@ public class HangmanGame {
             logger.info("Слово: " + hiddenWord.getMaskedWord());
             logger.info("Введите символ");
 
-            String inputStr = null;
+            String inputStr;
             try {
                 inputStr = in.next();
             } catch (Exception e) {
