@@ -1,41 +1,50 @@
 package edu.project1;
 
 import java.util.Scanner;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class HangmanGame {
     private final static int MIN_LENGTH_WORD = 3;
     private final static char MASKING_CHAR = '*';
-    private final Logger logger = LogManager.getLogger();
-    private final Session session = new Session(5);
+    private final static int DEFAULT_COUNT_ATTEMPTS = 5;
+    private final GameLogger gameLogger = new GameLogger();
+    private final Session session;
     private final Scanner in = new Scanner(System.in);
     private final HiddenWord hiddenWord;
     private boolean isEndGame = false;
 
     public HangmanGame() {
-        String randomWord = RandomWord.getRandomWord().toLowerCase();
-        if (randomWord.length() <= MIN_LENGTH_WORD) {
+        this(RandomWord.getRandomWord());
+    }
+
+    public HangmanGame(String word) {
+        this(word, DEFAULT_COUNT_ATTEMPTS);
+    }
+
+    public HangmanGame(String word, int countAttempts) {
+        String tempWord = checkWord(word);
+
+        if (countAttempts < 1) {
             isEndGame = true;
         }
 
-        this.hiddenWord = new HiddenWord(randomWord, MASKING_CHAR);
+        this.hiddenWord = new HiddenWord(tempWord, MASKING_CHAR);
+        this.session = new Session(countAttempts);
     }
 
     public void run() {
         while (!isEndGame) {
-            logger.info("Слово: " + hiddenWord.getMaskedWord());
-            logger.info("Введите символ");
+            gameLogger.logWord(hiddenWord.getMaskedWord());
+            gameLogger.logInputSymbol();
 
             String inputStr;
             try {
-                inputStr = in.next();
+                inputStr = in.nextLine();
             } catch (Exception e) {
-                logger.info("Вы вышли из игры!");
+                gameLogger.logExitGame();
                 break;
             }
 
-            if (inputStr.length() > 1) {
+            if (inputStr.length() != 1) {
                 continue;
             }
 
@@ -44,28 +53,56 @@ public class HangmanGame {
         }
     }
 
+    private String checkWord(String word) {
+        if (word.length() <= MIN_LENGTH_WORD) {
+            isEndGame = true;
+        }
+
+        return word.toLowerCase();
+    }
+
     private void handleInput(String inputStr) {
         GuessResult result = hiddenWord.guessSymbol(inputStr.toLowerCase().charAt(0));
 
         if (result.isHit()) {
-            logger.info("Вы угадали! :)");
+            gameLogger.logHit();
         } else if (!result.isSymbolAdded()) {
-            logger.info("Такой символ уже был!");
+            gameLogger.logRepeatSymbol();
         } else {
             session.decAttempts();
-            logger.info("Вы не угадали! :(");
-            logger.info(String.format("Осталось %d попыток", session.getAttempts()));
+            gameLogger.logMistake();
+            gameLogger.logAttemptsLeft(session.getAttempts());
         }
     }
 
     private void checkGameEnd() {
         if (session.isAttemptsLeft()) {
-            logger.info("Вы проиграли! :(");
+            gameLogger.logLose();
             isEndGame = true;
         }
         if (hiddenWord.isWordGuessed()) {
-            logger.info("Вы выиграли! :)");
+            gameLogger.logWin();
             isEndGame = true;
         }
+    }
+
+    public int getAttempts() {
+        return session.getAttempts();
+    }
+
+    public boolean getIsAttemptLeft() {
+        return session.isAttemptsLeft();
+    }
+
+    public String getMaskedWord() {
+        return hiddenWord.getMaskedWord();
+    }
+
+    public boolean getIsWordGuessed() {
+        return hiddenWord.isWordGuessed();
+    }
+
+    public boolean getIsEndGame() {
+        return isEndGame;
     }
 }
