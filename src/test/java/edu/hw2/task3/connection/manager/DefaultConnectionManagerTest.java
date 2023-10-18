@@ -4,7 +4,6 @@ import edu.hw2.task3.connection.Connection;
 import edu.hw2.task3.connection.FaultyConnection;
 import edu.hw2.task3.connection.StableConnection;
 import org.junit.jupiter.api.RepeatedTest;
-import org.junit.jupiter.api.Test;
 import java.util.LinkedList;
 import java.util.List;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;

@@ -30,7 +30,8 @@ public final class PopularCommandExecutor {
                 connection.execute(command);
                 return;
             } catch (ConnectionException e) {
-                throw new ConnectionException(maxAttempts + " attempts were not enough to execute the command '" + command + "'", e);
+                throw new ConnectionException(maxAttempts + " attempts were not enough "
+                    + "to execute the command '" + command + "'", e);
             }
         }
     }
