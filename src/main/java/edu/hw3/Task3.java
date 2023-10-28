@@ -9,7 +9,7 @@ public class Task3 {
 
     private Task3() {}
 
-    public static <T> Map<T, Integer> freqDict(List<T> list) {
+    public static <T> Map<T, Integer> freqDict(List<? extends T> list) {
         Objects.requireNonNull(list);
 
         Map<T, Integer> result = new HashMap<>();
