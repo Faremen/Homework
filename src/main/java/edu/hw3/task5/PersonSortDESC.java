@@ -2,6 +2,9 @@ package edu.hw3.task5;
 
 import java.util.Comparator;
 
+
+// Не смог решиться какой вариант лучше через 2 класса или через один, поэтому оставил оба варианта
+
 public class PersonSortDESC implements Comparator<Person> {
     @Override
     public int compare(Person person1, Person person2) {

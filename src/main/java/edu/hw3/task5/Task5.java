@@ -8,7 +8,7 @@ public class Task5 {
     private Task5() {}
 
     public static Person[] parseContacts(String[] strings, SortRule sortRule) {
-        if (strings == null) {
+        if (strings == null || sortRule == null) {
             return new Person[0];
         }
 
@@ -24,9 +24,15 @@ public class Task5 {
             }
         }
 
-        switch (sortRule) {
-            case ASC -> people.sort(new PersonSortASC());
-            case DESC -> people.sort(new PersonSortDESC());
+
+        // Не смог решиться какой вариант лучше через 2 класса или через один, поэтому оставил оба варианта
+
+        if (sortRule == SortRule.DESC) {
+            people.sort(new PersonSort(false));
+//            people.sort(new PersonSortDESC());
+        } else {
+            people.sort(new PersonSort(true));
+//            people.sort(new PersonSortASC());
         }
 
         return people.toArray(new Person[0]);
