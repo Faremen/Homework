@@ -112,6 +112,19 @@ public class Task5Test {
             Arguments.of(
                 SortRule.ASC,
                 new String[] {
+                    "A Z",
+                    "D",
+                    "C B"
+                },
+                new Person[] {
+                    new Person("C", "B"),
+                    new Person("D", null),
+                    new Person("A", "Z")
+                }
+            ),
+            Arguments.of(
+                SortRule.ASC,
+                new String[] {
                     "A",
                     "D",
                     "C"
