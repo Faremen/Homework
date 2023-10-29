@@ -14,16 +14,16 @@ public class PersonSort implements Comparator<Person> {
     public int compare(Person person1, Person person2) {
         int result;
 
-        if (person1.surname() == null) {
-            result = person2.surname() == null
-                ? person1.name().compareTo(person2.name())
-                : person1.name().compareTo(person2.surname());
+        if (person1.surname() == null && person2.surname() == null) {
+            result = person1.name().compareTo(person2.name());
+        } else if (person1.surname() == null) {
+            result = person1.name().compareTo(person2.surname());
         } else if (person2.surname() == null) {
             result = person1.surname().compareTo(person2.name());
         } else {
             result = person1.surname().compareTo(person2.surname());
         }
-
+        
         return isASC ? result : -result;
     }
 }
