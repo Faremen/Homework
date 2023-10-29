@@ -23,7 +23,7 @@ public class PersonSort implements Comparator<Person> {
         } else {
             result = person1.surname().compareTo(person2.surname());
         }
-        
+
         return isASC ? result : -result;
     }
 }
