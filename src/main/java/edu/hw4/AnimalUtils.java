@@ -13,6 +13,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@SuppressWarnings("MultipleStringLiterals")
 public class AnimalUtils {
 
     private AnimalUtils() {
