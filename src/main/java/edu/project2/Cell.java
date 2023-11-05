@@ -1,45 +1,28 @@
 package edu.project2;
 
-import java.util.Objects;
-
 public class Cell {
 
-    private Type type;
+    private boolean isRightWall;
+    private boolean isBottomWall;
 
-    public Cell(Type type) {
-        setType(type);
+    public Cell(boolean isRightWall, boolean isBottomWall) {
+        this.isRightWall = isRightWall;
+        this.isBottomWall = isBottomWall;
     }
 
-    public Type getType() {
-        return type;
+    public boolean isRightWall() {
+        return isRightWall;
     }
 
-    public void setType(Type type) {
-        Objects.requireNonNull(type);
-
-        this.type = type;
+    public void setRightWall(boolean rightWall) {
+        isRightWall = rightWall;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        Cell cell = (Cell) o;
-
-        return type == cell.type;
+    public boolean isBottomWall() {
+        return isBottomWall;
     }
 
-    @Override
-    public int hashCode() {
-        return type.hashCode();
-    }
-
-    public enum Type {
-        WALL, SPACE
+    public void setBottomWall(boolean bottomWall) {
+        isBottomWall = bottomWall;
     }
 }
