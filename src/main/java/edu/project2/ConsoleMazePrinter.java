@@ -1,5 +1,6 @@
 package edu.project2;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -26,23 +27,7 @@ public class ConsoleMazePrinter implements MazePrinter {
 
     @Override
     public void print(Maze maze) {
-        Objects.requireNonNull(maze);
-
-        StringBuilder stringBuilder = new StringBuilder();
-
-        renderWallLine(maze, stringBuilder);
-
-        for (int i = 1; i < maze.getHeight() * 2; i++) {
-            if (i % 2 == 1) {
-                renderVerticalWalls(maze, stringBuilder, i);
-            } else {
-                renderHorizontalWalls(maze, stringBuilder, i);
-            }
-        }
-
-        renderWallLine(maze, stringBuilder);
-
-        System.out.println(stringBuilder);
+        print(maze, new ArrayList<>());
     }
 
     @Override
@@ -58,9 +43,9 @@ public class ConsoleMazePrinter implements MazePrinter {
 
         for (int i = 1; i < maze.getHeight() * 2; i++) {
             if (i % 2 == 1) {
-                renderVerticalWalls(maze, stringBuilder, i);
+                renderVerticalWalls(maze, stringBuilder, i, coordinateSet);
             } else {
-                renderHorizontalWalls(maze, stringBuilder, i);
+                renderHorizontalWalls(maze, stringBuilder, i, coordinateSet);
             }
         }
 
@@ -69,17 +54,17 @@ public class ConsoleMazePrinter implements MazePrinter {
         System.out.println(stringBuilder);
     }
 
-    private void renderVerticalWalls(Maze maze, StringBuilder stringBuilder, int i) {
+    private void renderVerticalWalls(Maze maze, StringBuilder stringBuilder, int i, Set<Coordinate> coordinateSet) {
         for (int j = 0; j < cellHeight; j++) {
             renderOneWall(wallWidth, stringBuilder);
             for (int k = 1; k < maze.getWidth() * 2; k++) {
                 if (k % 2 == 1) {
-                    renderOneCell(cellWidth, stringBuilder);
+                    renderCellOrPath(coordinateSet, i, k, cellWidth, stringBuilder);
                 } else {
                     if (maze.getCell(i / 2, k / 2 - 1).isRightWall()) {
                         renderOneWall(wallWidth, stringBuilder);
                     } else {
-                        renderOneCell(wallWidth, stringBuilder);
+                        renderCellOrPath(coordinateSet, i, k, wallWidth, stringBuilder);
                     }
                 }
             }
@@ -88,7 +73,7 @@ public class ConsoleMazePrinter implements MazePrinter {
         }
     }
 
-    private void renderHorizontalWalls(Maze maze, StringBuilder stringBuilder, int i) {
+    private void renderHorizontalWalls(Maze maze, StringBuilder stringBuilder, int i, Set<Coordinate> coordinateSet) {
         for (int j = 0; j < wallHeight; j++) {
             renderOneWall(wallWidth, stringBuilder);
             for (int k = 1; k < maze.getWidth() * 2; k++) {
@@ -98,12 +83,26 @@ public class ConsoleMazePrinter implements MazePrinter {
                     if (maze.getCell(i / 2 - 1, k / 2).isBottomWall()) {
                         renderOneWall(cellWidth, stringBuilder);
                     } else {
-                        renderOneCell(cellWidth, stringBuilder);
+                        renderCellOrPath(coordinateSet, i, k, cellWidth, stringBuilder);
                     }
                 }
             }
             renderOneWall(wallWidth, stringBuilder);
             stringBuilder.append("\n");
+        }
+    }
+
+    private void renderCellOrPath(
+        Set<Coordinate> coordinateSet,
+        int i,
+        int k,
+        int width,
+        StringBuilder stringBuilder
+    ) {
+        if (coordinateSet.contains(new Coordinate(i / 2, k / 2))) {
+            renderOnePath(width, stringBuilder);
+        } else {
+            renderOneCell(width, stringBuilder);
         }
     }
 

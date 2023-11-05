@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class SolverImpl implements Solver {
+public class SearchInWidthSolver implements Solver {
 
     private Map<Integer, Set<Coordinate>> fillingMap;
 
