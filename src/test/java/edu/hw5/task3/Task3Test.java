@@ -87,6 +87,10 @@ public class Task3Test {
                 LocalDate.now().minusDays(2234)
             ),
             Arguments.of(
+                "999999999999999999999999999 DayS agO",
+                null
+            ),
+            Arguments.of(
                 "dsds days ago",
                 null
             ),
