@@ -1,8 +1,6 @@
 package edu.hw6.task1;
 
 import edu.hw6.FileUtil;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collection;
@@ -130,7 +128,7 @@ public class DiskMap implements Map<String, String> {
     }
 
     private String createEntry(String key, String value) {
-        return key + KEY_VALUE_SEPARATOR + value + "\n";
+        return (key + KEY_VALUE_SEPARATOR + value).replaceAll("\n", "\\\\n") + "\n";
     }
 
     private void deleteFileKeyValueStorage() {
@@ -142,16 +140,14 @@ public class DiskMap implements Map<String, String> {
     }
 
     private void initDiskMap() {
-        try (var lines = Files.lines(pathKeyValueStorage)) {
-            lines.forEach((str) -> {
-                    String[] keyValue = str.split(KEY_VALUE_SEPARATOR, 2);
-                    if (keyValue.length >= 2) {
-                        diskMap.put(keyValue[0], keyValue[1]);
-                    }
-                }
-            );
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        var lines = FileUtil.readAllLinesBreak(pathKeyValueStorage);
+
+        lines.forEach((str) -> {
+            String[] keyValue = str.split(KEY_VALUE_SEPARATOR, 2);
+
+            if (keyValue.length >= 2) {
+                diskMap.put(keyValue[0], keyValue[1]);
+            }
+        });
     }
 }
