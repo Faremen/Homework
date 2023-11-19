@@ -1,7 +1,5 @@
 package edu.hw6.task6;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.ServerSocket;
@@ -10,7 +8,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+@SuppressWarnings("MagicNumber")
 public class PortScanner {
 
     private static final Logger LOGGER = LogManager.getLogger();
@@ -34,12 +35,15 @@ public class PortScanner {
         put(27017, "MongoDB");
     }};
 
-    private PortScanner() {}
+    private PortScanner() {
+    }
 
     public static List<Port> checkPorts(List<Integer> ports) {
         Objects.requireNonNull(ports);
 
         List<Port> result = new ArrayList<>();
+
+        String unknown = "Не известно";
 
         for (var i : ports) {
             if (i > MAX_PORT || i < MIN_PORT) {
@@ -48,12 +52,21 @@ public class PortScanner {
                 boolean isTcpPort = isTCPPort(i);
                 boolean isUdpPort = isUDPPort(i);
 
+
                 if (isTcpPort) {
-                    result.add(Port.createOccupiedPort(i, Protocol.TCP, POSSIBLE_SERVICES.getOrDefault(i, "Не известно")));
+                    result.add(Port.createOccupiedPort(
+                        i,
+                        Protocol.TCP,
+                        POSSIBLE_SERVICES.getOrDefault(i, unknown)
+                    ));
                 }
 
                 if (isUdpPort) {
-                    result.add(Port.createOccupiedPort(i, Protocol.UDP, POSSIBLE_SERVICES.getOrDefault(i, "Не известно")));
+                    result.add(Port.createOccupiedPort(
+                        i,
+                        Protocol.UDP,
+                        POSSIBLE_SERVICES.getOrDefault(i, unknown)
+                    ));
                 }
 
                 if (!isTcpPort && !isUdpPort) {
@@ -69,11 +82,13 @@ public class PortScanner {
         LOGGER.info(String.format(TABLE_FORMAT, "Порт", "Статус", "Протокол", "Сервис"));
 
         for (var port : ports) {
-            LOGGER.info(String.format(TABLE_FORMAT,
+            LOGGER.info(String.format(
+                TABLE_FORMAT,
                 port.getPort(),
                 port.getStatus(),
                 port.getProtocol() != null ? port.getProtocol().toString() : "",
-                port.getService() != null ? port.getService() : ""));
+                port.getService() != null ? port.getService() : ""
+            ));
         }
     }
 
