@@ -22,6 +22,8 @@ public class FiltersTest {
         // Создаю пустые директории, потому что гит не добавит их
         FileUtil.createDirectories(TEST_DIR.resolve("Empty dir"));
         FileUtil.createDirectories(TEST_DIR.resolve("read dir"));
+
+        TEST_DIR.resolve("read only.txt").toFile().setReadOnly();
     }
 
     @AfterAll
