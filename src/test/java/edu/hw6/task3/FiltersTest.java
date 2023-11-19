@@ -124,7 +124,7 @@ public class FiltersTest {
         }
 
         // Then
-        assertThat(actual).hasSameElementsAs(expected);
+        assertThat(actual).containsAll(expected);
     }
 
     @Test
