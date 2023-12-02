@@ -23,7 +23,6 @@ public class MetricResourcesInfoBuilder implements MetricBuilder {
             .toList();
 
         for (Map.Entry<String, Integer> entry : sortedEntries) {
-//            metricList.add("`" + entry.getKey() + "`" + "|" + entry.getValue());
             metricList.add(String.format("`%s`|%d", entry.getKey(), entry.getValue()));
         }
 
