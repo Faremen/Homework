@@ -1,6 +1,6 @@
 package edu.hw6.task1;
 
-import edu.hw6.FileUtil;
+import edu.util.FileUtil;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;

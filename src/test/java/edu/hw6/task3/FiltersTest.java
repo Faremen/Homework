@@ -1,6 +1,6 @@
 package edu.hw6.task3;
 
-import edu.hw6.FileUtil;
+import edu.util.FileUtil;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

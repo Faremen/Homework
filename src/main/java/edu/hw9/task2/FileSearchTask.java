@@ -1,4 +1,4 @@
-package edu.hw8.task2;
+package edu.hw9.task2;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -6,26 +6,22 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.RecursiveTask;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class FileSearchTask extends RecursiveTask<List<Path>> {
     private final Path root;
-    private final long minFileSize;
-    private final long maxFileSize;
-    private final String extension;
+    private final Predicate<Path> predicate;
 
-    public FileSearchTask(Path root, long minFileSize, long maxFileSize, String extension) {
+    public FileSearchTask(Path root, Predicate<Path> predicate) {
         this.root = root;
-        this.minFileSize = minFileSize;
-        this.maxFileSize = maxFileSize;
-        this.extension = extension;
+        this.predicate = predicate;
     }
 
     @Override
     protected List<Path> compute() {
         List<Path> filesAndDirectories;
-        try (Stream<Path> stream = Files.list(root)) {
+        try (var stream = Files.list(root)) {
             filesAndDirectories = stream.collect(Collectors.toList());
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -43,24 +39,14 @@ public class FileSearchTask extends RecursiveTask<List<Path>> {
 
         List<Path> requiredFiles = new ArrayList<>();
         for (Path file : files) {
-            long fileSize;
-            try {
-                fileSize = Files.size(file);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-            if (fileSize >= minFileSize
-                && fileSize <= maxFileSize
-                && file.getFileName().toString().endsWith("." + extension)
-            ) {
+            if (predicate.test(file)) {
                 requiredFiles.add(file);
             }
         }
 
         List<FileSearchTask> tasks = new ArrayList<>();
         for (Path subdirectory : subdirectories) {
-            var task = new FileSearchTask(subdirectory, minFileSize, maxFileSize, extension);
+            var task = new FileSearchTask(subdirectory, predicate);
             task.fork();
             tasks.add(task);
         }
