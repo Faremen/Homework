@@ -1,6 +1,5 @@
 package edu.project4.image;
 
-import edu.hw6.FileUtil;
 import edu.project4.date.FractalImage;
 import edu.project4.date.Pixel;
 import java.awt.Color;

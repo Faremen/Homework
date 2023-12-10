@@ -10,7 +10,6 @@ public class Pixel {
     private int hitCount;
     private double normal;
 
-
     public Pixel() {
         color = DEFAUT_PIXEL_COLOR;
     }
@@ -61,13 +60,22 @@ public class Pixel {
     }
 
     @Override public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Pixel pixel = (Pixel) o;
 
-        if (hitCount != pixel.hitCount) return false;
-        if (Double.compare(normal, pixel.normal) != 0) return false;
+        if (hitCount != pixel.hitCount) {
+            return false;
+        }
+        if (Double.compare(normal, pixel.normal) != 0) {
+            return false;
+        }
+
         return Objects.equals(color, pixel.color);
     }
 
