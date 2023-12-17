@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ChangeClassTest {
     @Test
-    public void sum_ChangeSumToMultiply() {
+    public void sum_ChangeSumToMultiply_ResultMultiply() {
         // Given
         int expected = 10;
 
