@@ -1,6 +1,6 @@
 package edu.hw6.task4;
 
-import edu.hw6.FileUtil;
+import edu.util.FileUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
