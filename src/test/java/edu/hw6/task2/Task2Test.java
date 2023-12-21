@@ -1,6 +1,6 @@
 package edu.hw6.task2;
 
-import edu.hw6.FileUtil;
+import edu.util.FileUtil;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

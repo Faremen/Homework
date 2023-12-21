@@ -1,12 +1,13 @@
 package edu.hw6.task1;
 
-import edu.hw6.FileUtil;
+import edu.util.FileUtil;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
+import edu.util.Pair;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -108,7 +109,7 @@ public class DiskMapTest {
     @MethodSource("put_ProvideParameters")
     public void put_InputKeyAndValue_ResultEntryInFileAndInDiskMap(List<Pair<String, String>> inputPair, List<String> expected) {
         // When
-        inputPair.forEach((pair) -> diskMap.put(pair.key, pair.value));
+        inputPair.forEach((pair) -> diskMap.put(pair.key(), pair.value()));
 
         var actualInFile = FileUtil.readAllLinesBreak(PATH_TEST_FILE);
         var actualInDiskMap = diskMap.entrySet()
@@ -168,7 +169,7 @@ public class DiskMapTest {
     @MethodSource("remove_ProvideParameters")
     public void remove_InputKeyAndValue_ResultEntryInFileAndInDiskMap(List<Pair<String, String>> inputPair, List<String> deletedKeys, List<String> expected) {
         // When
-        inputPair.forEach((pair) -> diskMap.put(pair.key, pair.value));
+        inputPair.forEach((pair) -> diskMap.put(pair.key(), pair.value()));
         deletedKeys.forEach((key) -> diskMap.remove(key));
 
         var actualInFile = FileUtil.readAllLinesBreak(PATH_TEST_FILE);
@@ -210,7 +211,7 @@ public class DiskMapTest {
     @MethodSource("size_ProvideParameters")
     public void size_InputKeyAndValue_ResultSize(List<Pair<String, String>> inputPair, int expected) {
         // When
-        inputPair.forEach((pair) -> diskMap.put(pair.key, pair.value));
+        inputPair.forEach((pair) -> diskMap.put(pair.key(), pair.value()));
 
         var actual = diskMap.size();
 
@@ -246,7 +247,7 @@ public class DiskMapTest {
     @MethodSource("isEmpty_ProvideParameters")
     public void isEmpty_InputKeyAndValue_ResultIsEmpty(List<Pair<String, String>> inputPair, boolean expected) {
         // When
-        inputPair.forEach((pair) -> diskMap.put(pair.key, pair.value));
+        inputPair.forEach((pair) -> diskMap.put(pair.key(), pair.value()));
 
         var actual = diskMap.isEmpty();
 
@@ -283,7 +284,7 @@ public class DiskMapTest {
         ArrayList<String> expected = new ArrayList<>();
 
         // When
-        inputPair.forEach((pair) -> diskMap.put(pair.key, pair.value));
+        inputPair.forEach((pair) -> diskMap.put(pair.key(), pair.value()));
         diskMap.clear();
         var actualInFile = FileUtil.readAllLinesBreak(PATH_TEST_FILE);
         var actualInDiskMap = diskMap.entrySet()
@@ -297,5 +298,4 @@ public class DiskMapTest {
         assertThat(actualInDiskMap).isEqualTo(expected);
     }
 
-    public record Pair<T, V>(T key, V value) {}
 }
