@@ -4,7 +4,7 @@ import edu.hw10.task2.fib.FibCalculatorWithWritingDisk;
 import edu.hw10.task2.fib.FibCalculatorWithWritingDiskImpl;
 import edu.hw10.task2.fib.FibCalculatorWithoutWritingDisk;
 import edu.hw10.task2.fib.FibCalculatorWithoutWritingDiskImpl;
-import edu.hw6.FileUtil;
+import edu.util.FileUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
